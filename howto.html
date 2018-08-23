@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Menu </title>
+<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+<script>
+function start(){
+sjs.open("target",1600,850);
+
+var background = new sjs.Image("Images/space5.png");
+background.setSize(sjs.getWidth(),sjs.getHeight());
+
+var menu_text = new sjs.Text("Space has become extremely cluttered with floating debris, and is becoming hard for other ships to steer through them. You have been sent on a mission to collect the debris to make space safe again. Don't bump into other ships. The debris is colorful, and the other ships are white with a red stripe. Good luck!",26,"white");
+menu_text.centerH();
+
+var backBtn = new sjs.Button("back", function(){
+window.location = "start.html";
+});
+
+backBtn.bottom().center();
+
+
+
+}
+</script>
+</head>
+<body onload="start()">
+<h1> How To Play </h1>
+
+<div id="target" style="margin:auto;background:blue;"></div>
+</body>
+</html>

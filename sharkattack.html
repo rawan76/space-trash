@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Space Game </title>
+<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+<script>
+function start(){
+sjs.open("target",1600,850);
+
+var background = new sjs.Image("Images/space4.png");
+background.setSize(sjs.getWidth(),sjs.getHeight());
+
+ var playM = new Audio('Music/infinite_strings.mp3');
+var musicOn = false;
+var toggle = true;
+
+sjs.keyDown(SPACE_KEY, function(){
+if(toggle == true){
+if(musicOn == false){
+playM.play();
+musicOn = true;
+} else {
+playM.pause();
+musicOn = false;
+}
+toggle = false;
+setTimeout(function(){
+toggle = true;
+},1000);
+} //end if toggle statement
+}); //end keyDown function
+
+//Player
+
+var player = new sjs.Image("Images/titan_right.png");
+player.type = "player";
+
+player.friction = .1;
+player.accel = .1;
+
+player.setSize(200,100);
+sjs.keyDown(RIGHT_KEY, function(){
+player.setImage("Images/titan_right.png");
+player.pushRight();
+});
+
+sjs.keyDown(LEFT_KEY, function(){
+player.setImage("Images/titan_left.png");
+player.pushLeft();
+});
+
+sjs.keyDown(DOWN_KEY, function(){
+player.pushDown();
+});
+
+sjs.keyDown(UP_KEY, function(){
+player.pushUp();
+});
+
+//Enemies Come
+
+setInterval(function(){
+var speed = Math.floor(1 + Math.random()*10); 
+if(Math.random() > 0.5){
+var enemy = new sjs.Image("Images/galactica_right.png");
+enemy.type = "enemy";
+enemy.setSize(100,50);
+enemy.noBounds = true;
+enemy.friction = 0; 
+enemy.pushRight(speed); 
+enemy.scaleSize(.5 + Math.random() * 1.2);
+enemy.moveTo(-enemy.getWidth(), Math.random()*(enemy.getClamp().y)); 
+} else {
+var enemy = new sjs.Image("Images/galactica_left.png");
+enemy.type = "enemy";
+enemy.setSize(100,50);
+enemy.noBounds = true;
+enemy.friction = 0; 
+enemy.pushLeft(speed); 
+enemy.scaleSize(.5 + Math.random() * 1.2);
+enemy.moveTo(sjs.getWidth(), Math.random()*(enemy.getClamp().y)); 
+}
+},3000);
+
+sjs.left_screen.offset(-500);
+sjs.right_screen.offset(500); 
+
+//Space Debris
+
+setInterval(function(){
+var speed = Math.floor(1 + Math.random()*10); 
+if(Math.random() > 0.5){
+var debris = new sjs.Image("Images/ship_right.png");
+debris.type = "debris";
+debris.setSize(100,50);
+debris.noBounds = true;
+debris.friction = 0; 
+debris.pushRight(speed); 
+debris.scaleSize(.5 + Math.random() * 1.2);
+debris.moveTo(-debris.getWidth(), Math.random()*(debris.getClamp().y)); 
+} else {
+var debris = new sjs.Image("Images/ship_left.png");
+debris.type = "debris";
+debris.setSize(100,50);
+debris.noBounds = true;
+debris.friction = 0; 
+debris.pushLeft(speed); 
+debris.scaleSize(.5 + Math.random() * 1.2);
+debris.moveTo(sjs.getWidth(), Math.random()*(debris.getClamp().y)); 
+}
+},3000);
+
+sjs.left_screen.offset(-500);
+sjs.right_screen.offset(500); 
+
+//OnHits
+
+//Score
+var score = 0;
+ var score_txt = new sjs.Text("Debris: 0", 21, "orange");
+
+sjs.onHit("player","debris", function(x,y){
+score = score + 1;
+score_txt.setText("Debris: "+score);
+localStorage.setItem("score", score);
+if(score >= 20){
+sjs.destroyAll("enemy");
+window.location = "yay.html";
+}
+y.destroy();
+});
+
+sjs.onHit("enemy","player", function(x,y){
+y.destroy();
+window.location = "lose.html";
+});
+
+} //end start
+</script>
+</head>
+<body onload="start()">
+<h1> Space Picker-Upper </h1>
+
+<div id="target" style="margin:auto;background:grey;"></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Menu </title>
+<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>
+<script>
+function start(){
+sjs.open("target",1600,850);
+
+var background = new sjs.Image("Images/space5.png");
+background.setSize(sjs.getWidth(),sjs.getHeight());
+
+var menu_text = new sjs.Text("Space Picker-Upper!",50,"white");
+menu_text.centerH();
+
+var startBtn = new sjs.Button("Start", function(){
+window.location = "sharkattack.html";
+});
+
+startBtn.center();
+
+var info_text = new sjs.Text("Arrow keys to move.",22,"white");
+
+info_text.bottom().centerH();
+
+var instructBtn = new sjs.Button("How To Play", function(){
+window.location = "howto.html";
+});
+
+}
+</script>
+</head>
+<body onload="start()">
+<h1> Menu </h1>
+
+<div id="target" style="margin:auto;background:blue;"></div>
+</body>
+</html>
